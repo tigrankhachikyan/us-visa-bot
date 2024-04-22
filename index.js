@@ -6,9 +6,9 @@ import cheerio from 'cheerio';
 const USERNAME = process.env.USERNAME
 const PASSWORD = process.env.PASSWORD
 const SCHEDULE_ID = process.env.SCHEDULE_ID
-const FACILITY_ID = process.env.FACILITY_ID
+const FACILITY_ID = 122; // Yerevan
 
-const BASE_URI = 'https://ais.usvisa-info.com/pt-br/niv'
+const BASE_URI = 'https://ais.usvisa-info.com/hy-am/niv'
 
 async function main(currentBookedDate) {
   if (!currentBookedDate) {
@@ -36,7 +36,7 @@ async function main(currentBookedDate) {
           .then(d => log(`booked time at ${date} ${time}`))
       }
 
-      await sleep(3)
+      await sleep(10)
     }
 
   } catch(err) {
@@ -50,7 +50,11 @@ async function main(currentBookedDate) {
 async function login() {
   log(`Logging in`)
 
-  const anonymousHeaders = await fetch(`${BASE_URI}/users/sign_in`)
+  const anonymousHeaders = await fetch(`${BASE_URI}/users/sign_in`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0'
+    }
+  })
     .then(response => extractHeaders(response))
 
   return fetch(`${BASE_URI}/users/sign_in`, {
@@ -63,7 +67,7 @@ async function login() {
       'user[email]': USERNAME,
       'user[password]': PASSWORD,
       'policy_confirmed': '1',
-      'commit': 'Acessar'
+      'commit': 'Մուտք+գործել'
     }),
   })
     .then(res => (

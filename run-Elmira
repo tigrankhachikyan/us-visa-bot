@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+export USERNAME='meryandrias74@mail.ru'
+export PASSWORD='turistakan0310'
+export SCHEDULE_ID=51467801
+./index.js 2024-08-02
+
